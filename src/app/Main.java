@@ -1,3 +1,5 @@
+package app;
+
 import java.util.Scanner;
 import dominio.MaquinaDispensadora;
 import dominio.Snack;
@@ -10,15 +12,17 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("------ Maquina Expendedora -------");
-            System.out.println("|    1. Agregar unidad a snack   |");
-            System.out.println("|    2. Sacar unidad de snack    |");
-            System.out.println("|    3. Mostrar maquina          |");
-            System.out.println("|    4. Mostrar snacks agotados  |");
-            System.out.println("|    5. Quitar un snack          |");
-            System.out.println("|    6. Rellenar un snack        |");
-            System.out.println("|    #. Salir                    |");
-            System.out.println("---------------------------- -----");
+            System.out.println("------- Maquina Expendedora --------");
+            System.out.println("|    1. Agregar unidad a snack     |");
+            System.out.println("|    2. Sacar unidad de snack      |");
+            System.out.println("|    3. Mostrar maquina            |");
+            System.out.println("|    4. Mostrar snacks agotados    |");
+            System.out.println("|    5. Quitar un snack            |");
+            System.out.println("|    6. Rellenar un snack          |");
+            System.out.println("|    7. Ordenar Precio Descendente |");
+            System.out.println("|    8. Ordenar Cantidad Ascendente|");
+            System.out.println("|    9. Salir                      |");
+            System.out.println("------------------------------------");
             System.out.print("Seleccione una opcion con el numero indicado: ");
             int opc = scanner.nextInt();
 
@@ -80,6 +84,25 @@ public class Main {
                     } else {
                         System.out.println("El snack con codigo " + codigoRellenar + " no existe.");
                     }
+                    break;
+                case 7:
+                    System.out.println("Listado de precios en orden descendente: ");
+                    List<Snack> ordenadosPrecio = maquina.ordenarPrecio();
+                    for (Snack snack : ordenadosPrecio) {
+                        String precioFormateado = String.format("%.2f", snack.getPrecio());
+                        System.out.println("Nombre: " + snack.getNombre() + ", Precio: " + precioFormateado);
+                    }
+                    break;
+                case 8:
+                    System.out.println("Listado de cantidad en orden ascendente: ");
+                    List<Snack> ordenadosCantidad = maquina.ordenarCantidad();
+                    for (Snack snack : ordenadosCantidad) {
+                        System.out.println("Nombre: " + snack.getNombre() + ", Cantidad: " + snack.getCantidadDisponible());
+                    }
+                    break;
+                case 9:
+                    System.out.println("Saliendo del programa.");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Opcion no valida.");

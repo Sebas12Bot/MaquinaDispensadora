@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Comparator;
 
 public class MaquinaDispensadora {
 
@@ -11,9 +13,13 @@ public class MaquinaDispensadora {
 
     public MaquinaDispensadora() {
         snacks = new HashMap<>();
+        Random aleatorio = new Random();
         for (int i = 1; i <= 12; i++) {
             String codigo = String.valueOf(i);
-            snacks.put(codigo, new Snack(codigo, "Snack" + i, 6));
+            String nombre = "Snack" + i;
+            int cantidadInicial = 6;
+            double precio = 500 +(aleatorio.nextDouble()*4500);
+            snacks.put(codigo, new Snack(codigo, nombre, cantidadInicial,precio));
         }
     }
 
@@ -87,19 +93,22 @@ public class MaquinaDispensadora {
         return null;
     }
 
-    public void agregarUnidades(String codigo, int cantidad) {
-        Snack snack = obtenerSnack(codigo);
-        if (snack != null) {
-            for (int i = 0; i < cantidad; i++) {
-                snack.agregarUnidad();
-            }
-        }
+    public List<Snack> ordenarPrecio() {
+        List<Snack> listaOrdenada = new ArrayList<>(snacks.values());
+        listaOrdenada.sort(Comparator.comparing(Snack::getPrecio).reversed());
+        return listaOrdenada;
+    }
+
+    public List<Snack> ordenarCantidad() {
+        List<Snack> listaOrdenada = new ArrayList<>(snacks.values());
+        listaOrdenada.sort(Comparator.comparing(Snack::getCantidadDisponible));
+        return listaOrdenada;
     }
 
     public void mostrarMaquina() {
-        System.out.println("+--------------------------------------------------------------+");
-        System.out.println("|                    Maquina Expendedora🍫                     |");
-        System.out.println("+--------------------------------------------------------------+");
+        System.out.println("+-------------------------------------------------------------------------+");
+        System.out.println("|                         Maquina Expendedora🍫                           |");
+        System.out.println("+-------------------------------------------------------------------------+");
 
         for (int i = 1; i <= 12; i++) {
             if (i % 3 == 1) {
@@ -111,7 +120,7 @@ public class MaquinaDispensadora {
             if (snacks.containsKey(codigo)) {
                 Snack snack = snacks.get(codigo);
                 System.out.printf("   %-7s  ", snack.getNombre());
-                System.out.print("X" + snack.getCantidadDisponible() + "      |");
+                System.out.printf("X%d  $%.2f |", snack.getCantidadDisponible(), snack.getPrecio());
             } else {
                 System.out.print("           |");
             }
@@ -121,7 +130,7 @@ public class MaquinaDispensadora {
             }
         }
 
-        System.out.println("+--------------------------------------------------------------+");
+        System.out.println("+-------------------------------------------------------------------------+");
     }
 
 }

@@ -4,11 +4,13 @@ public class Snack {
     protected String codigo;
     protected String nombre;
     protected int cantidadDisponible;
+    protected double precio;
 
-    public Snack(String codigo, String nombre, int cantidadInicial) {
+    public Snack(String codigo, String nombre, int cantidadInicial, double precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.cantidadDisponible = cantidadInicial;
+        this.precio = precio;
     }
 
     public String getCodigo() {
@@ -41,4 +43,7 @@ public class Snack {
         }
     }
 
+    public double getPrecio() {
+        return precio;
+    }
 }
